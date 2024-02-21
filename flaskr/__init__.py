@@ -21,7 +21,9 @@ def create_app(test_config=None):
         return 'Hi mom'
 
     from . import db
-
-    
     db.init_app(app)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
+
     return app
