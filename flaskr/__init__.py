@@ -1,4 +1,5 @@
 import os
+    
 from flask import Flask
 
 def create_app(test_config=None):
@@ -11,7 +12,7 @@ def create_app(test_config=None):
     if test_config is None:
         app.config.from_pyfile('config.py',silent=True)
     else:
-        app.config.from_envvar(test_config)
+        app.config.from_mapping(test_config)
     
     os.makedirs(app.instance_path,exist_ok=True)
 
@@ -20,5 +21,7 @@ def create_app(test_config=None):
         return 'Hi mom'
 
     from . import db
+
+    
     db.init_app(app)
     return app
