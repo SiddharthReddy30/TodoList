@@ -13,7 +13,11 @@
     <label for="dob">Date of birth</label>
     <input name="dob" id="dob" required>
     <label for="occupation">Occupation</label>
-    <input name="occupation" id="occupation" required>
+    <select name="occupation" id="occupation">
+        {% for o in occupation_opts %}
+        <option value="{{o.occupation}}">{{o.occupation}}</option>
+        {% endfor %}
+    </select>
     <label for="email">Email</label>
     <input name="email" id="email" required>
     <label for="password">Password</label>
