@@ -28,8 +28,6 @@ def register():
             error = 'Last Name is required.'
         elif not dob:
             error = 'Date of birth is required.'
-        elif not occupation:
-            error = 'occupation is required.'
         elif not email:
             error = 'email is required.'
         elif not password:
@@ -37,11 +35,11 @@ def register():
 
         if error is None:
             try:
-                db.execute(
-                    "INSERT INTO user(fname, lname, dob,occupation, email, password) VALUES (?,?,?,?,?,?)",
-                    (first_name, last_name, dob, occupation,
-                     email, generate_password_hash(password)),
-                )
+                db.execute("INSERT INTO user(fname, lname, dob, occupation, email, password)\
+                           VALUES(?, ?, ?, ?, ?, ?)",
+                           (first_name, last_name, dob, occupation,
+                            email, generate_password_hash(password)),
+                           )
                 db.commit()
             except db.IntegrityError:
                 error = f"{email} is already registerd."
@@ -50,7 +48,12 @@ def register():
 
         flash(error)
 
-    return render_template('auth/register.html')
+    return render_template('auth/register.html',
+                           occupation_opts=[{'occupation': 'Student'},
+                                 {'occupation': 'Software engineer'},
+                                 {'occupation': 'Business Professional'},
+                                 {'occupation': 'Medical Professional'},
+                                 {'occupation': 'other'}])
 
 
 @bp.route('/login', methods=('GET', 'POST'))
@@ -63,7 +66,7 @@ def login():
         error = None
 
         user = db.execute(
-            "SELECT * FROM WHERE email = ?", (email,)
+            "SELECT * FROM user WHERE email = ?", (email,)
         ).fetchone()
 
         if user is None:
