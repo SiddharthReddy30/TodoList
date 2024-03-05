@@ -9,17 +9,21 @@ from flask.db import get_db
 bp = Blueprint('todos', __name__)
 
 
-@bp.route('/index', methods=('GET', 'POST', 'UPDATE'))
+@bp.route('/index')
 def index():
+    if g.user is None:
+        return render_template('todos/index.html')
+    return redirect(url_for(todos.todos))
+
+
+@bp.route('/todos', methods=('GET', 'POST', 'UPDATE'))
+@login_required
+def todos():
     if request.method == 'GET':
-        if g.user is None:
-            return render_template('index.html')
 
         db = get_db()
+
         todos = db.execute(
             'SELECT t.body, status FROM todo t JOIN user u ON t.user_id = u.id'
         ).fetchall()
-        return redirect(url_for('todos/todos.html', todos=todos))
-
-    if request.method == 'POST':
-         GF
+        return render_template('todos/todos.html', todos=todos)
