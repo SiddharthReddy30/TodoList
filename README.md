@@ -9,17 +9,20 @@
 * Log in/ Sign up.
 * View current days accomplishments.
 * Check daily status on calender.
+* Add and view 10 stories on push tab for motivation.
+* Ability to follow 3 members.
+* Flag any insensitive content in stories. 
+* change monthly and yearly todos on 1st of every month and year respectively.
+* Request public todo ideas.
 
 ## App features
-* Displays today's weather at your location.
-* Display your current streak.
-* Email reminders for very important tasks/events.
 * Daily stoic quote.
+* Display your current streak.
+* 3 email reminders for very important tasks/events.
 * Consistency status board.
-* Edit 1 daily accomplishments on 1st of every year.
-* Edit 2 daily accomplishments on 1st of every month.
+* Accomplishment cards. 
 * 2-step authentication.
-* Sign up with Google/apple account.
+* Sign up with Google/apple account or email.
 
 ## Technologies used to build this project
 * HTML5/CSS/JS
