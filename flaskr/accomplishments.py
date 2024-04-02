@@ -45,3 +45,22 @@ def delete(todo_id):
     except:
         result = {'success': False, 'response': 'Something went wrong'}
     return jsonify(result)
+
+
+@bp.route("/create", methods=['POST'])
+def create(task_id):
+    input = request.get_json()
+    body = input['body']
+
+    if not body:
+        result = {'success': False, 'response': 'Task can\'t be empty'}
+    else:
+        db = get_db()
+        db.execute(
+            'INSERT INTO todo (user_id, body, status)'
+            'VALUES (?, ?, ?)',
+            (g.user['id'], body, 0)
+        )
+        db.commit()
+        result = {'success': True, 'response': 'Done'}
+        return jsonify(result)
