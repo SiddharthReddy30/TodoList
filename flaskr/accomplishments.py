@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, flash, g, redirect, render_template, request, url_for, jsonify
 )
 from werkzeug.exception import abort
 
@@ -31,3 +31,17 @@ def get_accomp(id):
     if accomp['user_id'] != g.user['id']:
         abort(403)
     return accomp
+
+
+@bp.route('/delete/<int:todo_id>', methods=['POST'])
+@login_required
+def delete(todo_id):
+    try:
+        get_accomp(todo_id)
+        db = get_db()
+        db.execute('DELETE FROM todo WHERE id = ?', (todo_id,))
+        db.commit()
+        result = {'success': True, 'response': 'Removed task'}
+    except:
+        result = {'success': False, 'response': 'Something went wrong'}
+    return jsonify(result)
