@@ -48,6 +48,7 @@ def delete(todo_id):
 
 
 @bp.route("/create", methods=['POST'])
+@login_required
 def create(task_id):
     input = request.get_json()
     body = input['body']
@@ -64,3 +65,5 @@ def create(task_id):
         db.commit()
         result = {'success': True, 'response': 'Done'}
         return jsonify(result)
+
+
