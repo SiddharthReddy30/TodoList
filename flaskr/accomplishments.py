@@ -67,3 +67,20 @@ def create(task_id):
         return jsonify(result)
 
 
+@bp.route("/update/<int:task_id>", methods=['POST'])
+@login_required
+def update(task_id):
+    input = request.get_json()
+
+    if not input['body']:
+        result = {'success': False, 'response': 'Body can\'t be empty'}
+    else:
+        db = get_db()
+        db.execute(
+            'UPDATE todo SET body = ?, status = ?'
+            'WHERE id = ?'
+            (input['body'], input['status'], input['id'])
+        )
+        db.commit()
+        result = {'success': True, 'response': 'Task updated'}
+    return result
